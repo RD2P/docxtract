@@ -1,15 +1,31 @@
 {
+  "name": "docxtract",
+  "version": "1.0.0",
+  "main": "index.js",
+  "bin": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
     "inquirer": "^8.0.0",
     "mammoth": "^1.6.0"
   },
-  "name": "docxtract",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
+  "keywords": [
+    "docx",
+    "word",
+    "office",
+    "html",
+    "text"
+  ],
+  "author": "Raphael De Los Reyes",
   "license": "ISC",
-  "description": ""
+  "description": "From the cli, extract docx files in a folder and convert to text or html",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RD2P/docxtract.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RD2P/docxtract/issues"
+  },
+  "homepage": "https://github.com/RD2P/docxtract/blob/master/README.md"
 }
