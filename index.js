@@ -5,7 +5,7 @@ const mammoth = require("mammoth")
 const path = require('path')
 const inquirer = require('inquirer')
 
-// LOOP THROUGH FILES AND EXTRACT RAW TEXT
+// EXTRACT RAW TEXT
 const extractText = (arr, input, output) => {
 
   for (file of arr) {
@@ -28,7 +28,7 @@ const extractText = (arr, input, output) => {
   }
 }
 
-//LOOP THROUGH FILES AND CONVERT TO HTML
+//CONVERT TO HTML
 const convertToHtml = (arr, input, output) => {
 
   for (file of arr) {
@@ -50,6 +50,7 @@ const convertToHtml = (arr, input, output) => {
     }
   }
 }
+
 const methodPrompt = inquirer.createPromptModule()
 
 //QUESTIONS ASKED TO USER
@@ -82,7 +83,7 @@ methodPrompt(questions).then(answers => {
   //DECONSTRUCT ANSWERS FROM PROMPT ANSWERS
   const { Method, inputFolder, outputFolder } = answers
 
-  //GO THROUGH ALL FILES IN INPUT FOLDER
+  //READ FILES IN INPUT FOLDER
   const files = fs.readdirSync(inputFolder)
 
   if (Method == 'text') {
