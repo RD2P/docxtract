@@ -1,23 +1,14 @@
 #!/usr/bin/env node
 
 const fs = require('fs')
-const mammoth = require("mammoth");
+const mammoth = require("mammoth")
 const path = require('path')
-const prompt = require('prompt-sync')();
-
-
-const inputFolder = prompt('Enter input folder path: ');
-console.log(`Input folder: ${inputFolder}\n`);
-const files = fs.readdirSync(inputFolder)
-
-const outputFolder = prompt('Enter output folder path: ');
-console.log(`Output folder: ${outputFolder}\n`);
-
+const inquirer = require('inquirer')
 
 // LOOP THROUGH FILES AND EXTRACT RAW TEXT
-const extractText = () => {
+const extractText = (arr, input, output) => {
 
-  for (file of files) {
+  for (file of arr) {
     const fileArr = file.split('.')
     const filename = fileArr[0]
     const extension = fileArr.pop()
@@ -25,9 +16,9 @@ const extractText = () => {
     if (extension == 'docx') {
       async function convert() {
         try {
-          var data = await mammoth.extractRawText({ path: path.join(inputFolder, file) })
+          var data = await mammoth.extractRawText({ path: path.join(input, file) })
           const text = data.value
-          fs.writeFileSync(path.join(outputFolder, `${filename}.txt`), text)
+          fs.writeFileSync(path.join(output, `${filename}.txt`), text)
         } catch (err) {
           console.log(err)
         }
@@ -37,23 +28,20 @@ const extractText = () => {
   }
 }
 
-// extractText()
+//LOOP THROUGH FILES AND CONVERT TO HTML
+const convertToHtml = (arr, input, output) => {
 
-
-//LOOP THROUGH FILES AND CONVERT
-const convertToHtml = () => {
-
-  for (file of files) {
+  for (file of arr) {
     const fileArr = file.split('.')
     const filename = fileArr[0]
-    const ext = fileArr.pop()
+    const extension = fileArr.pop()
 
     if (extension == 'docx') {
       async function convert() {
         try {
-          var data = await mammoth.convertToHtml({ path: path.join(inputFolder, file) })
+          var data = await mammoth.convertToHtml({ path: path.join(input, file) })
           const html = data.value
-          fs.writeFileSync(path.join(outputFolder, `${filename}.html`), html)
+          fs.writeFileSync(path.join(output, `${filename}.html`), html)
         } catch (err) {
           console.log(err)
         }
@@ -62,6 +50,55 @@ const convertToHtml = () => {
     }
   }
 }
+const methodPrompt = inquirer.createPromptModule()
+
+//QUESTIONS ASKED TO USER
+const questions = [
+  {
+    type: 'list',
+    name: 'Method',
+    message: 'What do you want to do with docx files? Convert to...',
+    choices: [
+      'text',
+      'html'
+    ]
+  },
+  {
+    type: 'input',
+    name: 'inputFolder',
+    message: '\n\n\nEnter the input folder path:\n',
+    default: 'C:\\Users\\user\\Desktop\\inputFolder'
+  },
+  {
+    type: 'input',
+    name: 'outputFolder',
+    message: '\n\n\nEnter the output folder path:\n',
+    default: 'C:\\Users\\user\\Desktop\\outputFolder'
+  }
+]
+
+//HANDLE ANSWERS
+methodPrompt(questions).then(answers => {
+  //DECONSTRUCT ANSWERS FROM PROMPT ANSWERS
+  const { Method, inputFolder, outputFolder } = answers
+
+  //GO THROUGH ALL FILES IN INPUT FOLDER
+  const files = fs.readdirSync(inputFolder)
+
+  if (Method == 'text') {
+    extractText(files, inputFolder, outputFolder)
+    console.log("\n\n\nThe docx files have been converted to text 🙂")
+  }
+
+  if (Method == 'html') {
+    convertToHtml(files, inputFolder, outputFolder)
+    console.log("\n\n\nThe docx files have been converted to html 🙂")
+  }
+})
+
+
+
+
 
 
 
