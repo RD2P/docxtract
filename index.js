@@ -58,7 +58,7 @@ const questions = [
   {
     type: 'list',
     name: 'Method',
-    message: 'What do you want to do with docx files? Convert to...',
+    message: 'What do you want to do with the docx files? Convert to...',
     choices: [
       'text',
       'html'
@@ -67,36 +67,37 @@ const questions = [
   {
     type: 'input',
     name: 'inputFolder',
-    message: '\n\n\nEnter the input folder path:\n',
+    message: '\n\nWhich folder do you want to be converted? (The files in this folder will not be changed)\nEnter the input folder path:\n',
     default: 'C:\\Users\\user\\Desktop\\inputFolder'
   },
   {
     type: 'input',
     name: 'outputFolder',
-    message: '\n\n\nEnter the output folder path:\n',
+    message: '\n\nIn which folder do you want the converted files to be saved? (The converted files will be saved here)\nEnter the output folder path:\n',
     default: 'C:\\Users\\user\\Desktop\\outputFolder'
   }
 ]
 
 //HANDLE ANSWERS
-methodPrompt(questions).then(answers => {
-  //DECONSTRUCT ANSWERS FROM PROMPT ANSWERS
-  const { Method, inputFolder, outputFolder } = answers
+methodPrompt(questions)
+  .then(answers => {
+    //DECONSTRUCT ANSWERS FROM PROMPT ANSWERS
+    const { Method, inputFolder, outputFolder } = answers
 
-  //READ FILES IN INPUT FOLDER
-  const files = fs.readdirSync(inputFolder)
+    //READ FILES IN INPUT FOLDER
+    const files = fs.readdirSync(inputFolder)
 
-  if (Method == 'text') {
-    extractText(files, inputFolder, outputFolder)
-    console.log("\n\n\nThe docx files have been converted to text 🙂")
-  }
+    if (Method == 'text') {
+      extractText(files, inputFolder, outputFolder)
+      console.log("\n\n\nThe docx files have been converted to text 🙂")
+    }
 
-  if (Method == 'html') {
-    convertToHtml(files, inputFolder, outputFolder)
-    console.log("\n\n\nThe docx files have been converted to html 🙂")
-  }
-})
-
+    if (Method == 'html') {
+      convertToHtml(files, inputFolder, outputFolder)
+      console.log("\n\n\nThe docx files have been converted to html 🙂")
+    }
+  })
+  .catch(err => console.log("Sorry, something went wrong ☹️ \nPlease check your paths and try again.\n"))
 
 
 
