@@ -2,7 +2,9 @@
   "name": "docxtract",
   "version": "1.0.1",
   "main": "index.js",
-  "bin": "index.js",
+  "bin": {
+    "docxtract": "index.js"
+  },
   "scripts": {
     "start": "node index.js"
   },
@@ -22,7 +24,7 @@
   "description": "From the cli, extract docx files in a folder and convert to text or html",
   "repository": {
     "type": "git",
-    "url": "https://github.com/RD2P/docxtract.git"
+    "url": "git+https://github.com/RD2P/docxtract.git"
   },
   "bugs": {
     "url": "https://github.com/RD2P/docxtract/issues"
