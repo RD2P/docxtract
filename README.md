@@ -18,15 +18,15 @@ Node.js
     npx docxtract
     ```
 
-2. Use the arrow keys to choose if you want to convert the docx files to text or html
+2. Use the arrow keys to choose whether you want to convert the docx files to text or html
 
-3. Enter the path of the folder which contain the files yoiu want to covnert
+3. Enter the path of the folder which contain the files you want to convert
 
 4. Enter the path of the folder where you want to save the converted files
 
    ![screenshot](images/screenshot.png)
 
-5. Upon success, the text or html files will be saved to the output folder. The original docx files in the input folder will not be changed.</br>Upon error, such as when the paths entered are not a valid path, the program will exit with an error message:
+5. Upon success, the text or html files will be saved to the output folder. The original docx files in the input folder will not be changed. </br>Upon error, such as with the paths entered being invalid paths, the program will exit with an error message:
 
     ![error message](images/errormessage.png)
 
